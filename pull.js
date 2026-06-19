@@ -36,6 +36,7 @@ response = await fetch(url,
     indexName: 'prod-restaurants-en',
     aroundLatLng:'32.71576,-117.1638173',
     aroundPrecision: 5000,
+    aroundRadius: 30000,
     attributesToHighlight: [],
     attributesToRetrieve: [
      'main_image',
