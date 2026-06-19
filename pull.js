@@ -11,12 +11,12 @@ response = await fetch(url,
     body: JSON.stringify({
         requests: [
             {
-                indexName: 'prod-restaurants-zh_CN',
+                indexName: 'prod-restaurants-fr',
                 aroundPrecision: 2000,
                 aroundRadius: 'all',
                 hitsPerPage: 0,
                 filters: 'status:Published',
-                query: 'Beijing, China'
+                query: 'Paris, France'
             }
         ]
     })
@@ -33,7 +33,7 @@ response = await fetch(url,
     body: JSON.stringify({
         requests: [
             {
-                indexName: 'prod-restaurants-zh_CN',
+                indexName: 'prod-restaurants-fr',
                 aroundPrecision: 2000,
                 aroundRadius: 'all',
                 attributesToHighlight: [],
@@ -51,9 +51,9 @@ response = await fetch(url,
                     'country',
                     'website'  
                 ],
-                hitsPerPage: 3, //data['results'][0]['nbHits'],
+                hitsPerPage: data['results'][0]['nbHits'],
                 filters: 'status:Published',
-                query: 'Beijing, China'
+                query: 'Paris, France'
             }
         ]
     })
