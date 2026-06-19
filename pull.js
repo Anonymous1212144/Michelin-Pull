@@ -12,11 +12,11 @@ response = await fetch(url,
   requests: [
    {
     indexName: 'prod-restaurants-en',
-    aroundPrecision: 2000,
-    aroundRadius: 'all',
+    aroundLatLng:'32.71576,-117.1638173',
+    aroundPrecision: 5000,
+    aroundRadius: 30000,
     hitsPerPage: 0,
-    filters: 'status:Published',
-    query: 'Chicago, Illinois, USA'
+    filters: 'status:Published'
    }
   ]
  })
@@ -34,8 +34,9 @@ response = await fetch(url,
   requests: [
    {
     indexName: 'prod-restaurants-en',
-    aroundPrecision: 2000,
-    aroundRadius: 'all',
+    aroundLatLng:'32.71576,-117.1638173',
+    aroundPrecision: 5000,
+    aroundRadius: 30000,
     attributesToHighlight: [],
     attributesToRetrieve: [
      'main_image',
@@ -52,8 +53,7 @@ response = await fetch(url,
      'website'  
     ],
     hitsPerPage: data['results'][0]['nbHits'],
-    filters: 'status:Published',
-    query: 'Chicago, Illinois, USA'
+    filters: 'status:Published'
    }
   ]
  })
@@ -117,7 +117,7 @@ data['results'][0]['hits'].forEach(hit => {
 hits.sort();
 
 var i = 0;
-var output = '<html><head><meta charset="UTF-8"><style>.o{display:block flex;flex-direction:row;}.o div{padding:10px;}.j{width:30%;}.j img{width:100%;}.t{width:70%;}.t img{width:3%;}h1{margin:0px;font-size:3cqw;}h2{margin:0px;font-size:2cqw;}p{margin:0px;font-size:1.5cqw;}</style></head><body>';
+var output = '<html><head><meta charset="UTF-8"><style>*{font-family:sans-serif;margin:0}.o{display:flex}.o div{padding:0.5%}.j{width:30%}.j *{width:100%}.t{width:70%}.t img{width:3%}h1{font-size:3cqw}h2{font-size:2cqw}p{font-size:1.5cqw}</style></head><body>';
 hits.forEach(h => {
  output += '<div class="o">'
  if (i % 2 == 0) {
@@ -141,7 +141,7 @@ hits.forEach(h => {
  output += h[9];
  output += '</h2><p>';
  output += h[10];
- output += '</p><br>';
+ output += '</p><br><b>';
  const phone = h[11];
  if (phone) {
   output += '<p>TEL. ';
@@ -159,7 +159,7 @@ hits.forEach(h => {
   output += website;
   output += '</p>'
  }
- output += '</div>'
+ output += '</b></div>'
  if (i % 2 == 1) {
   output += '<div class="j"><img src="';
   output += h[8];
