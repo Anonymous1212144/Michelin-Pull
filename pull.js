@@ -117,7 +117,7 @@ data['results'][0]['hits'].forEach(hit => {
 hits.sort();
 
 var i = 0;
-var output = '<html><head><meta charset="UTF-8"><style>*{font-family:sans-serif;margin:0}.o{display:flex}.o div{padding:0.5%}.j{width:30%}.j *{width:100%}.t{width:70%}.t img{width:3%}h1{font-size:3cqw}h2{font-size:2cqw}p{font-size:1.5cqw}</style></head><body>';
+var output = '<html><head><meta charset="UTF-8"><style>*{font-family:sans-serif;margin:0}.o{display:flex;justify-content:space-between;padding:1%}.j{width:29%}.j *{width:100%}.t{width:69%}.t img{width:3%}h1{font-size:3cqw}h2{font-size:2cqw}p{font-size:1.5cqw}</style></head><body>';
 hits.forEach(h => {
  output += '<div class="o">'
  if (i % 2 == 0) {
