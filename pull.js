@@ -3,60 +3,60 @@ var response, data;
 
 response = await fetch(url,
 {
-    method: 'POST',
-    headers: {
-        'accept': 'application/json',
-        'content-type': 'text/plain'
-    },
-    body: JSON.stringify({
-        requests: [
-            {
-                indexName: 'prod-restaurants-fr',
-                aroundPrecision: 2000,
-                aroundRadius: 'all',
-                hitsPerPage: 0,
-                filters: 'status:Published',
-                query: 'Paris, France'
-            }
-        ]
-    })
+ method: 'POST',
+ headers: {
+  'accept': 'application/json',
+  'content-type': 'text/plain'
+ },
+ body: JSON.stringify({
+  requests: [
+   {
+    indexName: 'prod-restaurants-fr',
+    aroundPrecision: 2000,
+    aroundRadius: 'all',
+    hitsPerPage: 0,
+    filters: 'status:Published',
+    query: 'Paris, France'
+   }
+  ]
+ })
 });
 data = await response.json();
 
 response = await fetch(url,
 {
-    method: 'POST',
-    headers: {
-        'accept': 'application/json',
-        'content-type': 'text/plain'
-    },
-    body: JSON.stringify({
-        requests: [
-            {
-                indexName: 'prod-restaurants-fr',
-                aroundPrecision: 2000,
-                aroundRadius: 'all',
-                attributesToHighlight: [],
-                attributesToRetrieve: [
-                    'main_image',
-                    'michelin_award',
-                    'name',
-                    'price_category',
-                    'cuisines',
-                    'main_desc',
-                    'phone',
-                    'street',
-                    'city',
-                    'region',
-                    'country',
-                    'website'  
-                ],
-                hitsPerPage: data['results'][0]['nbHits'],
-                filters: 'status:Published',
-                query: 'Paris, France'
-            }
-        ]
-    })
+ method: 'POST',
+ headers: {
+  'accept': 'application/json',
+  'content-type': 'text/plain'
+ },
+ body: JSON.stringify({
+  requests: [
+   {
+    indexName: 'prod-restaurants-fr',
+    aroundPrecision: 2000,
+    aroundRadius: 'all',
+    attributesToHighlight: [],
+    attributesToRetrieve: [
+     'main_image',
+     'michelin_award',
+     'name',
+     'price_category',
+     'cuisines',
+     'main_desc',
+     'phone',
+     'street',
+     'city',
+     'region',
+     'country',
+     'website'  
+    ],
+    hitsPerPage: data['results'][0]['nbHits'],
+    filters: 'status:Published',
+    query: 'Paris, France'
+   }
+  ]
+ })
 });
 data = await response.json();
 
@@ -66,48 +66,52 @@ const star = '<img src="https://guide.michelin.com/assets/images/icons/michelin-
 const hits = [];
 
 data['results'][0]['hits'].forEach(hit => {
-    const h = [];
-    const award = hit['michelin_award'];
-    if (award == 'BIB_GOURMAND') {
-        h.push(0);
-    } else if (award == 'ONE_STAR') {
-        h.push(1);
-    } else if (award == 'TWO_STARS') {
-        h.push(2);
-    } else if (award == 'THREE_STARS') {
-        h.push(3);
-    } else {
-        h.push(-1);
-    }
-    h.push(hit['country']['name']);
-    h.push(hit['region']['name']);
-    h.push(hit['city']['name']);
-    h.push(hit['area_name']);
-    h.push(hit['street']);
-    h.push(hit['name']);
-    const price = hit['price_category']['code'];
-    if (price == 'CAT_P01') {
-        h.push(1);
-    } else if (price == 'CAT_P02') {
-        h.push(2);
-    } else if (price == 'CAT_P03') {
-        h.push(3);
-    } else if (price == 'CAT_P04') {
-        h.push(4);
-    }
-    h.push(hit['main_image']['url']);
-    var j = false;
-    var c = '';
-    hit['cuisines'].forEach(cuisine => {
-        if (j) c += ',';
-        c += cuisine['label'];
-        j = true;
-    });
-    h.push(c);
-    h.push(hit['main_desc']);
-    h.push(hit['phone']);
-    h.push(hit['website']);
-    hits.push(h);
+ const h = [];
+ const award = hit['michelin_award'];
+ if (award == 'BIB_GOURMAND') {
+  h.push(0);
+ } else if (award == 'ONE_STAR') {
+  h.push(1);
+ } else if (award == 'TWO_STARS') {
+  h.push(2);
+ } else if (award == 'THREE_STARS') {
+  h.push(3);
+ } else {
+  h.push(-1);
+ }
+ h.push(hit['country']['name']);
+ h.push(hit['region']['name']);
+ h.push(hit['city']['name']);
+ h.push(hit['area_name']);
+ h.push(hit['street']);
+ h.push(hit['name']);
+ const price = hit['price_category']['code'];
+ if (price == 'CAT_P01') {
+  h.push(1);
+ } else if (price == 'CAT_P02') {
+  h.push(2);
+ } else if (price == 'CAT_P03') {
+  h.push(3);
+ } else if (price == 'CAT_P04') {
+  h.push(4);
+ }
+ try {
+  h.push(hit['main_image']['url']);
+ } catch {
+  h.push('');
+ }
+ var j = false;
+ var c = '';
+ hit['cuisines'].forEach(cuisine => {
+  if (j) c += ', ';
+  c += cuisine['label'];
+  j = true;
+ });
+ h.push(c);
+ h.push(hit['main_desc']);
+ h.push(hit['phone']);
+ h.push(hit['website']);
+ hits.push(h);
 });
 
 hits.sort();
@@ -115,54 +119,54 @@ hits.sort();
 var i = 0;
 var output = '<html><head><meta charset="UTF-8"><style>.o{display:block flex;flex-direction:row;}.o div{padding:10px;}.j{width:30%;}.j img{width:100%;}.t{width:70%;}.t img{width:3%;}h1{margin:0px;font-size:3cqw;}h2{margin:0px;font-size:2cqw;}p{margin:0px;font-size:1.5cqw;}</style></head><body>';
 hits.forEach(h => {
-    output += '<div class="o">'
-    if (i % 2 == 0) {
-        output += '<div class="j"><img src="';
-        output += h[8];
-        output += '"></div>'
-    }
-    output += '<div class="t">'
-    const award = h[0];
-    if (award == 0) {
-        output += bib;
-    } else if (award > 0) {
-        output += star.repeat(award);
-    }
-    output += '<h1>';
-    output += h[6];
-    output += '</h1><h2>';
-    output += '$'.repeat(h[7]);
-    const price = h[8];
-    output += ' · ';
-    output += h[9];
-    output += '</h2><p>';
-    output += h[10];
-    output += '</p><br>';
-    const phone = h[11];
-    if (phone) {
-        output += '<p>TEL. ';
-        output += phone;
-        output += '</p>'
-    }
-    output += '<p>';
-    output += h[5];
-    output += ', ';
-    output += h[3];
-    output += '</p>';
-    const website = h[12];
-    if (website) {
-        output += '<p>';
-        output += website;
-        output += '</p>'
-    }
-    output += '</div>'
-    if (i % 2 == 1) {
-        output += '<div class="j"><img src="';
-        output += h[8];
-        output += '"></div>'
-    }
-    output += '</div>';
-    i++;
+ output += '<div class="o">'
+ if (i % 2 == 0) {
+  output += '<div class="j"><img src="';
+  output += h[8];
+  output += '"></div>'
+ }
+ output += '<div class="t">'
+ const award = h[0];
+ if (award == 0) {
+  output += bib;
+ } else if (award > 0) {
+  output += star.repeat(award);
+ }
+ output += '<h1>';
+ output += h[6];
+ output += '</h1><h2>';
+ output += '$'.repeat(h[7]);
+ const price = h[8];
+ output += ' · ';
+ output += h[9];
+ output += '</h2><p>';
+ output += h[10];
+ output += '</p><br>';
+ const phone = h[11];
+ if (phone) {
+  output += '<p>TEL. ';
+  output += phone;
+  output += '</p>'
+ }
+ output += '<p>';
+ output += h[5];
+ output += ', ';
+ output += h[3];
+ output += '</p>';
+ const website = h[12];
+ if (website) {
+  output += '<p>';
+  output += website;
+  output += '</p>'
+ }
+ output += '</div>'
+ if (i % 2 == 1) {
+  output += '<div class="j"><img src="';
+  output += h[8];
+  output += '"></div>'
+ }
+ output += '</div>';
+ i++;
 })
 output += '</body></html>'
 open(URL.createObjectURL(new Blob([output],{type:'text/html;charset=UTF-8'})),'_blank');
