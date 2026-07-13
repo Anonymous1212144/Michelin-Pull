@@ -98,7 +98,8 @@ data['results'][0]['hits'].forEach(hit => {
  try {
   h.push(hit['main_image']['url']);
  } catch {
-  h.push('https://robert-parker-michelin-global-prod.s3.amazonaws.com/guide/placeholder/online_list_default_0.jpg');
+  const r = Math.floor(Math.random()*12).toString();
+  h.push('https://d3h1lg3ksw6i6b.cloudfront.net/guide/placeholder/pic_poilist_default_' + r + '.jpg');
  }
  var j = false;
  var c = '';
