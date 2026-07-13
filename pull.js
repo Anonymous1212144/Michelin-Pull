@@ -98,7 +98,7 @@ data['results'][0]['hits'].forEach(hit => {
  try {
   h.push(hit['main_image']['url']);
  } catch {
-  h.push('');
+  h.push('https://robert-parker-michelin-global-prod.s3.amazonaws.com/guide/placeholder/online_list_default_0.jpg');
  }
  var j = false;
  var c = '';
@@ -108,7 +108,7 @@ data['results'][0]['hits'].forEach(hit => {
   j = true;
  });
  h.push(c);
- h.push(hit['main_desc']);
+ h.push(hit['main_desc'].replace(/^(?:\s|<br\s*\/?>)+|(?:\s|<br\s*\/?>)+$/gi, ''));
  h.push(hit['phone']);
  h.push(hit['website']);
  hits.push(h);
