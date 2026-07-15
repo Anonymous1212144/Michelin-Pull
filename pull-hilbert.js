@@ -66,7 +66,7 @@ const hits = [];
  })();
 
  const c0 = Math.PI * centre[0] / 180;
- const c1 = Math.PI * centre[0] / 180;
+ const c1 = Math.PI * centre[1] / 180;
  const cc0 = Math.cos(c0);
  const sc0 = Math.sin(c0);
  const cc1 = Math.cos(c1);
@@ -74,11 +74,11 @@ const hits = [];
  const cx = cc0 * cc1;
  const cy = sc0;
  const cz = cc0 * sc1;
- const b0x = -sc0 * cc1;
- const b0y = cc0;
- const b0z = -sc0 * sc1;
- const b1x = -sc1;
- const b1z = cc1;
+ const b0x = -sc1;
+ const b0z = cc1;
+ const b1x = -sc0 * cc1;
+ const b1y = cc0;
+ const b1z = -sc0 * sc1;
 
  data['results'][0]['hits'].forEach(hit => {
   const h = [];
@@ -107,8 +107,8 @@ const hits = [];
    const py = lcy / len - cy;
    const pz = lcz / len - cz;
 
-   let b0 = Math.round((b0x * px + b0y * py + b0z * pz + Math.PI) * 6371000);
-   let b1 = Math.round((b1x * px + b1z * pz + Math.PI) * 6371000);
+   let b0 = Math.round((b0x * px + b0z * pz + Math.PI) * 6371000);
+   let b1 = Math.round((b1x * px + b1y * py + b1z * pz + Math.PI) * 6371000);
 
    const b = 26;
 
