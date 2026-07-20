@@ -82,25 +82,29 @@ const hits = [];
 
  let csv = 'WKT,name';
  data['results'][0]['hits'].forEach(hit => {
-  csv += '\n"POINT (';
-  csv += hit['_geoloc']['lng'].toString();
-  csv += ' ';
-  csv += hit['_geoloc']['lat'].toString();
-  csv += ')",';
-  csv += hit['name'];
-
   const h = [];
   const award = hit['michelin_award'];
+  let a_lvl;
   if (award == 'BIB_GOURMAND')
-   h.push(0);
+   a_lvl = 0;
   else if (award == 'ONE_STAR')
-   h.push(1);
+   a_lvl = 1;
   else if (award == 'TWO_STARS')
-   h.push(2);
+   a_lvl = 2;
   else if (award == 'THREE_STARS')
-   h.push(3);
+   a_lvl = 3;
   else
-   h.push(-1);
+   a_lvl = -1;
+  h.push(a_lvl);
+  
+  if (a_lvl >= 0) {
+   csv += '\n"POINT (';
+   csv += hit['_geoloc']['lng'].toString();
+   csv += ' ';
+   csv += hit['_geoloc']['lat'].toString();
+   csv += ')",';
+   csv += hit['name'];
+  }
 
   {
    const l0 = Math.PI * hit['_geoloc']['lat'] / 180;
