@@ -80,7 +80,15 @@ const hits = [];
  const b1y = cc0;
  const b1z = -sc0 * sc1;
 
+ let csv = 'WKT,name';
  data['results'][0]['hits'].forEach(hit => {
+  csv += '\n"POINT (';
+  csv += hit['_geoloc']['lng'].toString();
+  csv += ' ';
+  csv += hit['_geoloc']['lat'].toString();
+  csv += ')",';
+  csv += hit['name'];
+
   const h = [];
   const award = hit['michelin_award'];
   if (award == 'BIB_GOURMAND')
@@ -180,6 +188,7 @@ const hits = [];
   h.push(hit['website']);
   hits.push(h);
  });
+ console.log(csv);
 }
 
 hits.sort();
